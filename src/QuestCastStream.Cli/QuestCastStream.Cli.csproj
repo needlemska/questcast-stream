@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>questcast-stream</AssemblyName>
+    <RootNamespace>QuestCastStream</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <!-- stage 1 is a measurement tool: keep it single-file and dependency free -->
+    <PublishSingleFile>false</PublishSingleFile>
+  </PropertyGroup>
+
+</Project>
