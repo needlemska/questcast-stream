@@ -1,0 +1,15 @@
+﻿{
+    "encoder":  "hevc_amf",
+    "size":  "640x640",
+    "fps":  60,
+    "bitrate_m":  25,
+    "hw_decode":  true,
+    "samples":  0,
+    "p50":  null,
+    "p95":  null,
+    "min":  null,
+    "max":  null,
+    "wall_seconds":  18.37,
+    "send":  "{\"frames\":716,\"packets\":3688,\"bytes\":3991943,\"seconds\":12.004,\"mbit\":2.7,\"fps\":59.6}",
+    "recv":  "{\"frames\":516,\"broken\":1,\"late\":0,\"sink_dead\":false,\"packets\":2860,\"bytes\":3119517,\"seconds\":15.015,\"mbit\":1.7}"
+}

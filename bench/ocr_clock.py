@@ -1,4 +1,4 @@
-﻿"""Читает время с кадра, снятого из окна получателя.
+"""Читает время с кадра, снятого из окна получателя.
 
 Режимы:
   1) два окна на одном снимке экрана:
@@ -21,7 +21,7 @@ from pathlib import Path
 
 from PIL import Image, ImageOps
 
-TIME_RE = re.compile(r"(\d{2})\D?(\d{2})\D?(\d{2})\D?(\d{3})")
+TIME_RE = re.compile(r"(\d{2})\D?(\d{2})\D?(\d{2})\D?(\d{1,3})")
 
 
 def read_clock(image: Image.Image, box: tuple[int, int, int, int], tesseract: str) -> str | None:
@@ -44,6 +44,8 @@ def read_clock(image: Image.Image, box: tuple[int, int, int, int], tesseract: st
     hh, mm, ss, ms = m.groups()
     if not (0 <= int(hh) < 24 and 0 <= int(mm) < 60 and 0 <= int(ss) < 60):
         return None
+    # последняя цифра может быть обрезана кропом кадра: 508 -> 50, добираем нулём
+    ms = (ms + "000")[:3]
     return f"{hh}:{mm}:{ss}.{ms}"
 
 

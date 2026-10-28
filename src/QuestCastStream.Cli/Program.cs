@@ -1,23 +1,29 @@
-using System.Globalization;
+﻿using System.Globalization;
 
 namespace QuestCastStream;
 
 public static class Program
 {
     private const string Usage = """
-    questcast-stream - стенд и прототип конвейера для Quest 3 (этап 1)
+    questcast-stream - СЃС‚РµРЅРґ Рё РїСЂРѕС‚РѕС‚РёРї РєРѕРЅРІРµР№РµСЂР° РґР»СЏ Quest 3 (СЌС‚Р°Рї 1)
 
       send --file <hevc> [--host 127.0.0.1] [--port 5001] [--mtu 1200]
            [--fps 60] [--drop 0.02] [--loop] [--seconds N]
-          режет Annex-B поток на кадры и отправляет пакетами не длиннее MTU
+          СЂРµР¶РµС‚ Annex-B РїРѕС‚РѕРє РЅР° РєР°РґСЂС‹ Рё РѕС‚РїСЂР°РІР»СЏРµС‚ РїР°РєРµС‚Р°РјРё РЅРµ РґР»РёРЅРЅРµРµ MTU
+
+      live-send --stdin [--host 127.0.0.1] [--port 5001] [--mtu 1200] [--fps 60] [--seconds N]
+          читает Annex-B из stdin и отправляет кадры по мере поступления (для живой цепи)
+
+      live-recv --port 5001 [--seconds N]
+          собирает кадры и пишет их в stdout (дальше - в декодер)
 
       recv --out <hevc> [--port 5001] [--seconds 10]
-          собирает кадры обратно, пишет поток и печатает статистику сети
+          СЃРѕР±РёСЂР°РµС‚ РєР°РґСЂС‹ РѕР±СЂР°С‚РЅРѕ, РїРёС€РµС‚ РїРѕС‚РѕРє Рё РїРµС‡Р°С‚Р°РµС‚ СЃС‚Р°С‚РёСЃС‚РёРєСѓ СЃРµС‚Рё
 
       info --file <hevc>
-          сколько кадров, сколько пакетов при заданном MTU, средний размер кадра
+          СЃРєРѕР»СЊРєРѕ РєР°РґСЂРѕРІ, СЃРєРѕР»СЊРєРѕ РїР°РєРµС‚РѕРІ РїСЂРё Р·Р°РґР°РЅРЅРѕРј MTU, СЃСЂРµРґРЅРёР№ СЂР°Р·РјРµСЂ РєР°РґСЂР°
 
-    Коды возврата: 0 - успех, 2 - неверные аргументы.
+    РљРѕРґС‹ РІРѕР·РІСЂР°С‚Р°: 0 - СѓСЃРїРµС…, 2 - РЅРµРІРµСЂРЅС‹Рµ Р°СЂРіСѓРјРµРЅС‚С‹.
     """;
 
     public static int Main(string[] args)
@@ -51,6 +57,8 @@ public static class Program
                     Seconds = Int(opts, "seconds", 10),
                     Mtu = Int(opts, "mtu", 1200),
                 }),
+                "live-send" => Live.SendFromStdin(Str(opts, "host", "127.0.0.1"), Int(opts, "port", 5001), Int(opts, "mtu", 1200), Dbl(opts, "fps", 60), Int(opts, "seconds", 0)),
+                "live-recv" => Live.ReceiveToStdout(Int(opts, "port", 5001), Int(opts, "seconds", 10)),
                 "info" => Info(Need(opts, "file"), Int(opts, "mtu", 1200)),
                 _ => Unknown(args[0]),
             };
@@ -134,3 +142,4 @@ public static class Program
     private static bool Flag(Dictionary<string, string> o, string key)
         => o.TryGetValue(key, out var v) && v == "true";
 }
+

@@ -1,0 +1,15 @@
+﻿{
+    "encoder":  "hevc_amf",
+    "size":  "1440x1440",
+    "fps":  60,
+    "bitrate_m":  25,
+    "hw_decode":  true,
+    "samples":  76,
+    "p50":  580.2,
+    "p95":  1037.6,
+    "min":  183.3,
+    "max":  1585.1,
+    "wall_seconds":  16.51,
+    "send":  "{\"frames\":715,\"packets\":2798,\"bytes\":2942570,\"seconds\":12.007,\"mbit\":2.0,\"fps\":59.5}",
+    "recv":  "{\"frames\":634,\"broken\":1,\"late\":0,\"dropped\":3,\"sink_dead\":false,\"packets\":2579,\"bytes\":2726983,\"seconds\":15.010,\"mbit\":1.5,\"age_p50_ms\":0.0,\"age_p95_ms\":1.0,\"age_max_ms\":178.0}"
+}
